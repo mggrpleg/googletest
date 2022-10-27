@@ -46,10 +46,6 @@ macro(fix_default_compiler_settings_)
         string(REPLACE "-D_DLL" "" ${flag_var} "${${flag_var}}")
       endif()
 
-      # We prefer more strict warning checking for building Google Test.
-      # Replaces /W3 with /W4 in defaults.
-      string(REPLACE "/W3" "/W4" ${flag_var} "${${flag_var}}")
-
       # Prevent D9025 warning for targets that have exception handling
       # turned off (/EHs-c- flag). Where required, exceptions are explicitly
       # re-enabled using the cxx_exception_flags variable.
@@ -77,7 +73,7 @@ macro(config_compiler_and_linker)
   if (MSVC)
     # Newlines inside flags variables break CMake's NMake generator.
     # TODO(vladl@google.com): Add -RTCs and -RTCu to debug builds.
-    set(cxx_base_flags "-GS -W4 -WX -wd4251 -wd4275 -nologo -J")
+    set(cxx_base_flags "-GS -WX -wd4251 -wd4275 -nologo -J")
     set(cxx_base_flags "${cxx_base_flags} -D_UNICODE -DUNICODE -DWIN32 -D_WIN32")
     set(cxx_base_flags "${cxx_base_flags} -DSTRICT -DWIN32_LEAN_AND_MEAN")
     set(cxx_exception_flags "-EHsc -D_HAS_EXCEPTIONS=1")
